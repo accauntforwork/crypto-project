@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  height: 100%;
+  background-color: #14161a;
+}
+body {
+  background-color: #14161a;
+}
+
 @layer components {
   .table-heading {
     @apply text-black font-bold;
@@ -19,7 +27,12 @@
 }
 @layer components {
   .search {
-    @apply block w-[1280px] mx-auto mb-5 bg-transparent border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500  p-2.5;
+    @apply block w-full mx-auto mb-5 bg-transparent border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500  p-2.5;
+  }
+}
+@layer components {
+  .chart-btn {
+    @apply h-10 w-[15vw] hover:bg-[#87CEEB] hover:text-black border-2 border-[#87CEEB] rounded-sm;
   }
 }
 
