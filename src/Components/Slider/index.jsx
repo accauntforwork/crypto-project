@@ -7,23 +7,22 @@ export default function Slider() {
     <div className="py-4 w-full ">
       <Slogan />
       <div className="bg-[url(/bg-header.jpg)] h-[400px] flex items-center">
-        <Marquee
-          pauseOnHover="true"
-          className="py-3 overflow-hidden w-[1200px] mx-auto"
-        >
-          <div className="flex w-full ">
-            <span className="mr-52 block h-16 w-16 bg-red-700">1</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">2</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">3</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
-            <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
-          </div>
-        </Marquee>
+        <div className="w-[1280px] mx-auto">
+          <Marquee pauseOnHover="true" className="py-3 overflow-hidden">
+            <div className="flex w-full">
+              <span className="mr-52 block h-16 w-16 bg-red-700">1</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">2</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">3</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
+              <span className="mr-52 block h-16 w-16 bg-red-700">4</span>
+            </div>
+          </Marquee>
+        </div>
       </div>
     </div>
   );
