@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .table-heading {
+    @apply text-black font-bold;
+  }
+}
+@layer components {
+  .my-select {
+    @apply roboto-regular text-white bg-transparent w-20 text-[16px] focus:outline-none py-1;
+  }
+}
+@layer components {
+  .button {
+    @apply roboto-regular text-sm py-2 px-4 bg-[#87CEEB] text-[#000000DE] rounded ml-4;
+  }
+}
+@layer components {
+  .search {
+    @apply block w-[1280px] mx-auto mb-5 bg-transparent border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500  p-2.5;
+  }
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
