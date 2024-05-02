@@ -9,7 +9,7 @@ export default function Slider() {
       <div className="bg-[url(/bg-header.jpg)] h-[400px] flex items-center">
         <Marquee
           pauseOnHover="true"
-          className="py-3 overflow-hidden w-[1280px] mx-auto"
+          className="py-3 overflow-hidden w-[1200px] mx-auto"
         >
           <div className="flex w-full ">
             <span className="mr-52 block h-16 w-16 bg-red-700">1</span>
