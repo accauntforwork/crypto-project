@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CoinList } from "../../URLs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../Loader";
+import { addToWatchlist } from "../../redux/watchlistSlice";
 
 function Table() {
   const currency = useSelector((store) => store.currency.currency);
@@ -9,11 +11,16 @@ function Table() {
   const [arr, setarr] = useState([]);
   const [page, setpage] = useState(1);
   const [searchquery, setsearchquery] = useState("");
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
 
   let navigate = useNavigate();
-  const clicked = (val) => navigate(`/coins/${val.id}`);
+  // const clicked = (val) => navigate(`/coins/${val}`);
+  const clicked = (val) => {
+    navigate(`/coins/${val.id}`);
+    dispatch(addToWatchlist(val));
+  };
   const getclass = (val) => {
     const numericVal = Number(val);
     return numericVal < 0 ? "text-red-600 text-xs " : "text-green-600 text-xs ";
@@ -73,58 +80,78 @@ function Table() {
         </div>
       </div>
       <div>
-        {arr
-          ?.filter(
-            (coin) =>
-              coin.name.toLowerCase().includes(searchquery) ||
-              coin.symbol.toLowerCase().includes(searchquery)
-          )
-          .slice(page * 10 - 10, page * 10)
-          .map((coin) => (
-            <div
-              className="border border-slate-500 w-full flex justify-between items-center px-4 pt-4 pb-6 hover:bg-cyan-800 cursor-pointer"
-              onClick={() => clicked(coin)}
-              key={coin.id}
-            >
-              <div className="flex items-center gap-4 w-1/2">
-                <img
-                  className="w-[50px] h-[50px]"
-                  src={coin.image}
-                  alt={coin.name}
-                />
-                <div>
-                  <h3 className="text-2xl text-white uppercase">
-                    {coin.symbol}
-                  </h3>
-                  <p className="text-sm text-[#A9A9A9]">{coin.name}</p>
-                </div>
-              </div>
+        {loading ? (
+          <div className="h-[800px]">
+            <Loader />
+          </div>
+        ) : (
+          <div>
+            {arr
+              ?.filter(
+                (coin) =>
+                  coin.name.toLowerCase().includes(searchquery) ||
+                  coin.symbol.toLowerCase().includes(searchquery)
+              )
+              .slice(page * 10 - 10, page * 10)
+              .map((coin) => (
+                <div
+                  className="border border-slate-500 w-full flex justify-between items-center px-4 pt-4 pb-6 hover:bg-cyan-800 cursor-pointer"
+                  onClick={() => clicked(coin)}
+                  key={coin.id}
+                >
+                  <div className="flex items-center gap-4 w-1/2">
+                    <img
+                      className="w-[50px] h-[50px]"
+                      src={coin.image}
+                      alt={coin.name}
+                    />
+                    <div>
+                      <h3 className="text-2xl text-white uppercase">
+                        {coin.symbol}
+                      </h3>
+                      <p className="text-sm text-[#A9A9A9]">{coin.name}</p>
+                    </div>
+                  </div>
 
-              <div className="text-white flex w-1/2">
-                <p className="w-52 text-right">
-                  {currency === "usd" ? "$" : currency === "euro" ? "€" : "£"}
-                  {coin.current_price.toLocaleString()}
-                </p>
-                <div className="flex gap-4 w-52 justify-end items-center">
-                  <img
-                    src="/eyeWhite.svg"
-                    className="w-[26px] h-[26px]"
-                    alt=""
-                  />
-                  <span
-                    className={`${getclass(coin.price_change_percentage_24h)}`}
-                  >
-                    {coin.price_change_percentage_24h.toFixed(2)} %
-                  </span>
+                  <div className="text-white flex w-1/2">
+                    <p className="w-52 text-right">
+                      {currency === "usd"
+                        ? "$"
+                        : currency === "euro"
+                        ? "€"
+                        : "£"}
+                      {coin.current_price.toLocaleString()}
+                    </p>
+                    <div className="flex gap-4 w-52 justify-end items-center">
+                      <img
+                        src="/eyeWhite.svg"
+                        className="w-[26px] h-[26px]"
+                        alt=""
+                      />
+                      <span
+                        className={`${getclass(
+                          coin.price_change_percentage_24h
+                        )}`}
+                      >
+                        {coin.price_change_percentage_24h.toFixed(2)} %
+                      </span>
+                    </div>
+                    <p className="w-52 text-end">
+                      {currency === "usd"
+                        ? "$"
+                        : currency === "euro"
+                        ? "€"
+                        : "£"}
+                      {(coin.market_cap / 1000000).toFixed(0).toLocaleString()}{" "}
+                      M
+                    </p>
+                  </div>
                 </div>
-                <p className="w-52 text-end">
-                  {currency === "usd" ? "$" : currency === "euro" ? "€" : "£"}
-                  {(coin.market_cap / 1000000).toFixed(0).toLocaleString()} M
-                </p>
-              </div>
-            </div>
-          ))}
+              ))}
+          </div>
+        )}
       </div>
+
       <div
         id="pagination"
         className="flex justify-center items-center py-2 gap-1"

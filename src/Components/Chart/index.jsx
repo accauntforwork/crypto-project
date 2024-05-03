@@ -13,6 +13,7 @@ import {
   Title,
   CategoryScale,
 } from "chart.js";
+import Loader from "../Loader";
 
 Chart.register(
   LineController,
@@ -59,34 +60,41 @@ const MyChart = () => {
         <span className="uppercase">{currency}</span>
       </span>
       <div className="w-[1000px] flex flex-col gap-[2vh] p-3 text-[#FAF0E6]">
-        <Line
-          data={{
-            labels: arr?.map((coin) => {
-              let date = new Date(coin[0]);
-              let time =
-                date.getHours() > 12
-                  ? `${date.getHours() - 12}:${date.getMinutes()} PM`
-                  : `${date.getHours()}:${date.getMinutes()} AM`;
-              return days === 1 ? time : date.toLocaleDateString();
-            }),
-            datasets: [
-              {
-                data: arr?.map((coin) => coin[1]),
-                label: `Price ( Past ${days} Days ) in ${
-                  currency === "usd" ? "$" : currency === "euro" ? "€" : "£"
-                }`,
-                borderColor: "skyblue",
+        {loading ? (
+          <div className="w-[950px] h-[550px]">
+            <Loader />
+          </div>
+        ) : (
+          <Line
+            data={{
+              labels: arr?.map((coin) => {
+                let date = new Date(coin[0]);
+                let time =
+                  date.getHours() > 12
+                    ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+                    : `${date.getHours()}:${date.getMinutes()} AM`;
+                return days === 1 ? time : date.toLocaleDateString();
+              }),
+              datasets: [
+                {
+                  data: arr?.map((coin) => coin[1]),
+                  label: `Price ( Past ${days} Days ) in ${
+                    currency === "usd" ? "$" : currency === "euro" ? "€" : "£"
+                  }`,
+                  borderColor: "skyblue",
+                },
+              ],
+            }}
+            options={{
+              elements: {
+                point: {
+                  radius: 1,
+                },
               },
-            ],
-          }}
-          options={{
-            elements: {
-              point: {
-                radius: 1,
-              },
-            },
-          }}
-        />
+            }}
+          />
+        )}
+
         <div className="flex gap-[4vw] justify-evenly text-black text-xs">
           <button
             className={`chart-btn ${

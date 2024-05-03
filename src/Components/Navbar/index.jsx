@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrency } from "../../redux/currencySlice";
+import WatchList from "../Watchlist";
 import logo from "/logo.svg";
 
 function Navbar() {
@@ -14,8 +15,16 @@ function Navbar() {
   const handleCurrencyChange = (event) => {
     dispatch(setCurrency(event.target.value));
   };
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <nav className="w-[1280px] mx-auto flex justify-between py-3 mb-16">
+      {isOpen && <WatchList />}
       <img src={logo} alt="" />
       <div>
         <select onChange={handleCurrencyChange} className="my-select">
@@ -29,7 +38,9 @@ function Navbar() {
             </option>
           ))}
         </select>
-        <button className="button">WATCH LIST</button>
+        <button onClick={handleOpen} className="button z-20 relative">
+          WATCH LIST
+        </button>
       </div>
     </nav>
   );

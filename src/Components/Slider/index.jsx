@@ -2,17 +2,23 @@ import React, { useState, useEffect } from "react";
 import Marquee from "react-fast-marquee";
 import Slogan from "../Slogan";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWatchlist } from "../../redux/watchlistSlice";
 
 import { TrendingCoins } from "../../URLs";
+import Loader from "../Loader";
 
 function Slider() {
   const [arr, setarr] = useState();
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const currency = useSelector((store) => store.currency.currency);
 
-  const clicked = (val) => navigate(`/coins/${val}`);
+  const clicked = (val) => {
+    navigate(`/coins/${val.id}`);
+    dispatch(addToWatchlist(val));
+  };
 
   useEffect(() => {
     const fetchdata = async () => {
@@ -43,16 +49,16 @@ function Slider() {
   return (
     <div className="py-4 w-full ">
       <Slogan />
-      {loading ? (
-        <div>load date</div>
-      ) : (
-        <div className="bg-[url(/bg-header.jpg)] h-[400px] flex items-center">
-          <div className="w-[1280px] mx-auto">
+      <div className="bg-[url(/bg-header.jpg)] h-[400px] flex items-center">
+        <div className="w-[1280px] mx-auto">
+          {loading ? (
+            <Loader />
+          ) : (
             <Marquee pauseOnHover="true" className="py-3 overflow-hidden">
               <div className="flex w-full">
                 {arr?.map((curr) => (
                   <div
-                    onClick={() => clicked(curr.id)}
+                    onClick={() => clicked(curr)}
                     className="flex flex-col justify-center items-center pt-1 text-white mr-52 cursor-pointer"
                     key={curr.id}
                   >
@@ -86,9 +92,9 @@ function Slider() {
                 ))}
               </div>
             </Marquee>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }
