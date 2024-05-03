@@ -19,9 +19,9 @@ function WatchList() {
       <h2 className="text-3xl text-center py-8 uppercase font-medium">
         Watchlist
       </h2>
-      {watchlistIds.watchlistIds.length > 0 ? (
+      {watchlistIds?.watchlistIds?.length > 0 ? (
         <ul className="flex gap-10 flex-wrap justify-center">
-          {watchlistIds?.watchlistIds.map((item) => (
+          {watchlistIds?.watchlistIds?.map((item) => (
             <li key={item.id}>
               <div className="flex flex-col items-center bg-[#14161A] p-6 rounded-xl">
                 <Link to={`/coins/${item.id}`}>
