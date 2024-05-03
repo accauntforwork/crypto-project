@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CoinList } from "../../URLs";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Loader from "../Loader";
-import { addToWatchlist } from "../../redux/watchlistSlice";
+// import { addToWatchlist } from "../../redux/watchlistSlice";
 
 function Table() {
   const currency = useSelector((store) => store.currency.currency);
@@ -11,7 +11,7 @@ function Table() {
   const [arr, setarr] = useState([]);
   const [page, setpage] = useState(1);
   const [searchquery, setsearchquery] = useState("");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
 
@@ -19,7 +19,21 @@ function Table() {
   // const clicked = (val) => navigate(`/coins/${val}`);
   const clicked = (val) => {
     navigate(`/coins/${val.id}`);
-    dispatch(addToWatchlist(val));
+    // dispatch(addToWatchlist(val));
+    const storedItems = localStorage.getItem("watchlist");
+    let items = storedItems ? JSON.parse(storedItems) : [];
+
+    const productExists = items.some((item) => item.id === val.id);
+
+    if (!productExists) {
+      items = [...items, { ...val }];
+
+      localStorage.setItem("watchlist", JSON.stringify(items));
+
+      console.log(items);
+    } else {
+      console.log(`Product with ID ${val.id} already exists in localStorage.`);
+    }
   };
   const getclass = (val) => {
     const numericVal = Number(val);

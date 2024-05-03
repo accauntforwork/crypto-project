@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Marquee from "react-fast-marquee";
 import Slogan from "../Slogan";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addToWatchlist } from "../../redux/watchlistSlice";
+import { useSelector } from "react-redux";
+// import { addToWatchlist } from "../../redux/watchlistSlice";
 
 import { TrendingCoins } from "../../URLs";
 import Loader from "../Loader";
@@ -12,12 +12,29 @@ function Slider() {
   const [arr, setarr] = useState();
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const currency = useSelector((store) => store.currency.currency);
 
   const clicked = (val) => {
     navigate(`/coins/${val.id}`);
-    dispatch(addToWatchlist(val));
+    // dispatch(addToWatchlist(val));
+
+    const storedItems = localStorage.getItem("watchlist");
+    let items = storedItems ? JSON.parse(storedItems) : [];
+
+    const productExists = items.some((item) => item.id === val.id);
+
+    if (!productExists) {
+      items = [...items, { ...val }];
+
+      localStorage.setItem("watchlist", JSON.stringify(items));
+
+      console.log(items);
+    } else {
+      console.log(`Product with ID ${val.id} already exists in localStorage.`);
+    }
+
+    // localStorage.setItem("single", JSON.stringify(val.id));
   };
 
   useEffect(() => {

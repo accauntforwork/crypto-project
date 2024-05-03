@@ -1,17 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { removeFromWatchlist } from "../../redux/watchlistSlice";
+// import { removeFromWatchlist } from "../../redux/watchlistSlice";
 
 function WatchList() {
   const currency = useSelector((store) => store.currency.currency);
 
-  const watchlistIds = useSelector((store) => store.watchlist.watchlistIds);
+  // const watchlistIds = useSelector((store) => store.watchlist.watchlistIds);
   // console.log(watchlistIds);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const handleRemove = (val) => {
-    dispatch(removeFromWatchlist(val));
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    let item = localStorage.getItem("watchlist");
+    let items = item ? JSON.parse(item) : [];
+    setData(items);
+  }, [data]);
+  console.log(data);
+
+  const handleRemove = (e) => {
+    // dispatch(removeFromWatchlist(val));
+    console.log(e);
+    let item = localStorage.getItem("watchlist");
+    let items = item ? JSON.parse(item) : [];
+    items = items.filter((item) => {
+      return item.id !== e;
+    });
+    localStorage.setItem("watchlist", JSON.stringify(items));
+    setData(items);
   };
 
   return (
@@ -19,9 +36,10 @@ function WatchList() {
       <h2 className="text-3xl text-center py-8 uppercase font-medium">
         Watchlist
       </h2>
-      {watchlistIds?.watchlistIds?.length > 0 ? (
+      {console.log(data)}
+      {data?.length > 0 ? (
         <ul className="flex gap-10 flex-wrap justify-center">
-          {watchlistIds?.watchlistIds?.map((item) => (
+          {data?.map((item) => (
             <li key={item.id}>
               <div className="flex flex-col items-center bg-[#14161A] p-6 rounded-xl">
                 <Link to={`/coins/${item.id}`}>
