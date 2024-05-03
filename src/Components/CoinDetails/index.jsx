@@ -13,7 +13,7 @@ const CoinDetails = () => {
 
   useEffect(() => {
     const fetchdata = async () => {
-      // setLoading(true);
+      setLoading(true);
       try {
         const response = await fetch(SingleCoin(id));
         if (!response.ok) {
@@ -25,15 +25,11 @@ const CoinDetails = () => {
       } catch (error) {
         console.log("Error", error.message);
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     };
     fetchdata();
   }, [id]);
-
-  setTimeout(() => {
-    setLoading(false);
-  }, 4000);
 
   return (
     <div>
@@ -50,7 +46,9 @@ const CoinDetails = () => {
             <h3 className="py-6 text-5xl font-bold">{coin?.name}</h3>
           </div>
           <div className="flex flex-col items-start gap-5 text-2xl font-bold">
-            <h6 className="text-base w-[400px]">{coin?.description.en}.</h6>
+            <h6 className="text-base w-[400px]">
+              {coin?.description.en.split(".")[0]}.
+            </h6>
             <h5>
               Rank: <span className="font-normal">{coin?.market_cap_rank}</span>
             </h5>
