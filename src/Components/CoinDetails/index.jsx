@@ -36,7 +36,7 @@ const CoinDetails = () => {
       {loading ? (
         <Loader />
       ) : (
-        <div className="w-[400px] flex flex-col text-[#FAF0E6] p-6">
+        <div className="w-[500px] flex flex-col text-[#FAF0E6] p-6">
           <div className="flex flex-col items-center">
             <img
               className="py-5 w-[200px] h-[200px]"
@@ -46,9 +46,7 @@ const CoinDetails = () => {
             <h3 className="py-6 text-5xl font-bold">{coin?.name}</h3>
           </div>
           <div className="flex flex-col items-start gap-5 text-2xl font-bold">
-            <h6 className="text-base">
-              {coin?.description.en.split(". ")[0]}.
-            </h6>
+            <h6 className="text-base w-[400px]">{coin?.description.en}.</h6>
             <h5>
               Rank: <span className="font-normal">{coin?.market_cap_rank}</span>
             </h5>

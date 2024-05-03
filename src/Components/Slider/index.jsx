@@ -48,8 +48,8 @@ function Slider() {
 
   return (
     <div className="py-4 w-full ">
-      <Slogan />
-      <div className="bg-[url(/bg-header.jpg)] h-[400px] flex items-center">
+      <div className="bg-[url(/bg-header.jpg)] h-[400px] flex justify-center flex-col">
+        <Slogan />
         <div className="w-[1280px] mx-auto">
           {loading ? (
             <Loader />
