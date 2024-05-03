@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const localData = JSON.parse(localStorage.getItem("watchlist")) || [];
+// const localData = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-const initialState = {
-  watchlistIds: localData,
-};
-console.log(JSON.parse(localStorage.getItem("watchlist")));
+const initialState = JSON.parse(localStorage.getItem("watchlist")) || [];
+
+console.log(7, JSON.parse(localStorage.getItem("watchlist")));
+console.log(8, initialState);
+
 export const watchlistSlice = createSlice({
   name: "watchlist",
   initialState,

@@ -7,7 +7,7 @@ function WatchList() {
   const currency = useSelector((store) => store.currency.currency);
 
   const watchlistIds = useSelector((store) => store.watchlist.watchlistIds);
-  console.log(watchlistIds);
+  // console.log(watchlistIds);
   const dispatch = useDispatch();
 
   const handleRemove = (val) => {
@@ -23,11 +23,8 @@ function WatchList() {
         <ul className="flex gap-10 flex-wrap justify-center">
           {watchlistIds.watchlistIds.map((item) => (
             <li key={item.id}>
-              <div
-                className="flex flex-col items-center bg-[#14161A] p-6 rounded-xl"
-                to={`/coins/${item.id}`}
-              >
-                <Link>
+              <div className="flex flex-col items-center bg-[#14161A] p-6 rounded-xl">
+                <Link to={`/coins/${item.id}`}>
                   <img className="w-[80px] h-[80px]" src={item.image} alt="" />
                   <p className="mb-2">
                     {currency === "usd" ? "$" : currency === "euro" ? "€" : "£"}
