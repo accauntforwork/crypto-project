@@ -9,11 +9,11 @@ const CoinDetails = () => {
   const currency = useSelector((store) => store.currency.currency);
   // /coins/:id
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchdata = async () => {
-      setLoading(true);
+      // setLoading(true);
       try {
         const response = await fetch(SingleCoin(id));
         if (!response.ok) {
@@ -25,11 +25,15 @@ const CoinDetails = () => {
       } catch (error) {
         console.log("Error", error.message);
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     };
     fetchdata();
   }, [id]);
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 4000);
 
   return (
     <div>
